@@ -1,7 +1,10 @@
-#[derive(thiserror::Error, Debug)]
-pub enum CoreError {
-    #[error("Failed to check cloud service availability for {0}")]
-    ServiceUnavailable(String),
-    #[error("Unknown cloud service")]
-    UnknownService,
+use thiserror::Error;
+
+#[derive(Error, Clone, Copy, Debug, PartialEq, Eq, PartialOrd, Ord)]
+pub enum CheckAliveError {
+    #[error("Tokio tasks connected unsuccessfully.")]
+    JoinTokioTaskFailed,
+
+    #[error("An unknown error has occurred: {0}.")]
+    Unknow(&'static str),
 }

@@ -1,3 +1,3 @@
-use crate::error::CoreError;
+use crate::error::CheckAliveError;
 
-pub type CoreResult<T> = Result<T, CoreError>;
+pub type CheckAliveResult<T> = Result<T, CheckAliveError>;
