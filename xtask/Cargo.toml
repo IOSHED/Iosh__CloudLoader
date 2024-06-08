@@ -1,7 +1,8 @@
 [package]
-name = "desctop"
+name = "xtask"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-core_cloud_loader = { path = "../core" }
+xtaskops = "^0.4.1"
+anyhow = "1"
