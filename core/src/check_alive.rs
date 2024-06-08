@@ -1,5 +1,6 @@
-use futures::{future, Future};
 use std::pin::Pin;
+
+use futures::{future, Future};
 
 use crate::{
     domain::{Cloud, OAuthToken},
@@ -130,9 +131,8 @@ mod tests {
 
     use futures::Future;
 
-    use crate::prelude::CheckAliveResult;
-
     use super::{are_all_clouds_alive, is_cloud_alive, CheckerCloud, Cloud, OAuthToken};
+    use crate::prelude::CheckAliveResult;
 
     /// Returns `false`` when checking if the token starts with "fake_" otherwise `true`.
     #[derive(Clone, Copy)]

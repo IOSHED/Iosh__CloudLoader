@@ -3,6 +3,5 @@
 members = [
     "core",
     "desctop",
-    "web/backend", 
-    "xtask",
+    "web/backend",
 ]
