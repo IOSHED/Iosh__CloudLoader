@@ -13,6 +13,10 @@
 //!
 //! - `are_all_clouds_alive`: Checks the availability of multiple cloud storage services using their OAuth tokens.
 //! - `is_cloud_alive`: Checks the availability of cloud storage service.
+//! 
+//! # Modules
+//! 
+//! - `tests`: the module used to get the functions and structures that will be tested should **not be imported into your projects**.
 
 #![allow(clippy::all)]
 
@@ -25,6 +29,12 @@ mod prelude;
 pub use domain::{AddressFile, Cloud, OAuthToken};
 pub use error::CheckAliveError;
 pub use prelude::CheckAliveResult;
+
+pub mod tests {
+    pub use super::check_alive::{are_all_clouds_alive, is_cloud_alive, CheckerCloud};
+    pub use super::domain::{AddressFile, Cloud, OAuthToken};
+    pub use super::prelude::CheckAliveResult;
+}
 
 /// Checks the availability of multiple cloud storage services using their OAuth tokens.
 ///
