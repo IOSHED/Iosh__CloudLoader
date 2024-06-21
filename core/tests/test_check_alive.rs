@@ -11,11 +11,7 @@ unsafe impl Send for FakeCheckerCloud {}
 
 #[async_trait]
 impl CheckerCloud for FakeCheckerCloud {
-    async fn check(
-        &self,
-        _cloud: Cloud,
-        token: OAuthToken,
-    ) -> CheckAliveResult<bool> {
+    async fn check(&self, _cloud: Cloud, token: OAuthToken) -> CheckAliveResult<bool> {
         Ok(!(token.token.get(0..=4) == Some("fake_")))
     }
 }

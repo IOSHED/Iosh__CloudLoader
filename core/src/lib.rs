@@ -13,13 +13,14 @@
 //!
 //! - `are_all_clouds_alive`: Checks the availability of multiple cloud storage services using their OAuth tokens.
 //! - `is_cloud_alive`: Checks the availability of cloud storage service.
-//! 
+//!
 //! # Modules
-//! 
+//!
 //! - `tests`: the module used to get the functions and structures that will be tested should **not be imported into your projects**.
 
 #![allow(clippy::all)]
 
+mod api_manager;
 mod check_alive;
 mod domain;
 mod error;
@@ -61,9 +62,7 @@ pub mod tests {
 /// let all_alive = are_all_clouds_alive(&clouds);
 /// assert_eq!(all_alive, [Ok(false), Ok(false)]);
 /// ```
-pub async fn are_all_clouds_alive(
-    clouds_with_auth: &[(Cloud, OAuthToken)],
-) -> Vec<CheckAliveResult<bool>> {
+pub async fn are_all_clouds_alive(clouds_with_auth: &[Cloud]) -> Vec<CheckAliveResult<OAuthToken>> {
     use check_alive::NetCheckerCloud;
     check_alive::are_all_clouds_alive(NetCheckerCloud, clouds_with_auth).await
 }
@@ -89,7 +88,7 @@ pub async fn are_all_clouds_alive(
 /// let is_alive = is_cloud_alive(Cloud::GoogleDrive, google_token);
 /// assert_eq!(is_alive, Ok(false));
 /// ```
-pub async fn is_cloud_alive(cloud: Cloud, tocken: OAuthToken) -> CheckAliveResult<bool> {
+pub async fn is_cloud_alive(cloud: Cloud) -> CheckAliveResult<OAuthToken> {
     use check_alive::NetCheckerCloud;
-    check_alive::is_cloud_alive(NetCheckerCloud, cloud, tocken).await
+    check_alive::is_cloud_alive(NetCheckerCloud, cloud).await
 }
