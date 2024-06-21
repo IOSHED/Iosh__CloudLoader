@@ -1,6 +1,5 @@
-use std::pin::Pin;
-
-use futures::{future, Future};
+use async_trait::async_trait;
+use futures::future;
 
 use crate::{
     domain::{Cloud, OAuthToken},
@@ -9,6 +8,7 @@ use crate::{
 };
 
 /// Describes what kind of verification needs to be carried out real or fake.
+#[async_trait]
 pub trait CheckerCloud {
     /// Verifies the authenticity of the OAuth token for a specific cloud.
     ///
@@ -19,12 +19,12 @@ pub trait CheckerCloud {
     ///
     /// # Return
     ///
-    /// - `Pin<Box<dyn Future<Output = CheckAliveResult<bool>> + Send>>`: Returns `true` if cloud service is alive, `false` (or Error telling you why the token verification is not possible) otherwise.
-    fn check(
+    /// - `CheckAliveResult<bool>`: Returns `true` if cloud service is alive, `false` (or Error telling you why the token verification is not possible) otherwise.
+    async fn check(
         &self,
         cloud: Cloud,
         token: OAuthToken,
-    ) -> Pin<Box<dyn Future<Output = CheckAliveResult<bool>> + Send>>;
+    ) -> CheckAliveResult<bool>;
 }
 
 /// The real implementation of the trait `CheckerCloud`, which sends an authorization request to the cloud given to it.
@@ -33,14 +33,30 @@ pub struct NetCheckerCloud;
 
 unsafe impl Send for NetCheckerCloud {}
 
+impl NetCheckerCloud {
+    async fn verify_google_drive(token: &OAuthToken) -> CheckAliveResult<bool> {
+        // Implementation to verify Google Drive token
+        Ok(true) // Placeholder for actual implementation
+    }
+
+    async fn verify_yandex_disk(token: &OAuthToken) -> CheckAliveResult<bool> {
+        // Implementation to verify Yandex Disk token
+        Ok(true) // Placeholder for actual implementation
+    }
+}
+
+#[async_trait]
 impl CheckerCloud for NetCheckerCloud {
-    fn check(
+    async fn check(
         &self,
-        _cloud: Cloud,
-        _token: OAuthToken,
-    ) -> Pin<Box<dyn Future<Output = CheckAliveResult<bool>> + Send>> {
-        // TODO: Implement real logic
-        Box::pin(async { Ok(true) })
+        cloud: Cloud,
+        token: OAuthToken,
+    ) -> CheckAliveResult<bool> {
+
+        match cloud {
+            Cloud::GoogleDrive => NetCheckerCloud::verify_google_drive(&token).await,
+            Cloud::YandexDisk => NetCheckerCloud::verify_yandex_disk(&token).await,
+        }
     }
 }
 

@@ -1,9 +1,7 @@
-use std::pin::Pin;
-
+use async_trait::async_trait;
 use core_cloud_loader::tests::{
     are_all_clouds_alive, is_cloud_alive, CheckAliveResult, CheckerCloud, Cloud, OAuthToken,
 };
-use futures::Future;
 
 /// Returns `false`` when checking if the token starts with "fake_" otherwise `true`.
 #[derive(Clone, Copy)]
@@ -11,13 +9,14 @@ struct FakeCheckerCloud;
 
 unsafe impl Send for FakeCheckerCloud {}
 
+#[async_trait]
 impl CheckerCloud for FakeCheckerCloud {
-    fn check(
+    async fn check(
         &self,
         _cloud: Cloud,
         token: OAuthToken,
-    ) -> Pin<Box<dyn Future<Output = CheckAliveResult<bool>> + Send>> {
-        Box::pin(async move { Ok(!(token.token.get(0..=4) == Some("fake_"))) })
+    ) -> CheckAliveResult<bool> {
+        Ok(!(token.token.get(0..=4) == Some("fake_")))
     }
 }
 
