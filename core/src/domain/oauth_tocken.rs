@@ -3,7 +3,8 @@
 /// # Fields
 ///
 /// - `token`: A string slice representing the OAuth token.
-#[derive(Clone)]
+#[derive(Debug, Clone)]
 pub struct OAuthToken {
-    pub token: String,
+    pub refresh_token: Option<String>,
+    pub access_token: String,
 }

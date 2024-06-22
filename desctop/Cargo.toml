@@ -5,3 +5,4 @@ edition = "2021"
 
 [dependencies]
 core_cloud_loader = { path = "../core" }
+tokio = { version = "1.35.1", features = ["full"] }

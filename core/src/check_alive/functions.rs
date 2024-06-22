@@ -43,7 +43,7 @@ where
     let tasks: Vec<_> = clouds_with_auth
         .iter()
         .cloned()
-        .map(|(cloud)| tokio::task::spawn(async move { is_cloud_alive(checker, cloud).await }))
+        .map(|cloud| tokio::task::spawn(async move { is_cloud_alive(checker, cloud).await }))
         .collect();
 
     let results = future::join_all(tasks).await;
