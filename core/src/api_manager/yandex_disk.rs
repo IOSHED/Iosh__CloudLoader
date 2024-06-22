@@ -9,8 +9,8 @@ pub struct ApiYandexDisk;
 impl ApiCloud for ApiYandexDisk {
     async fn verify(&self) -> CheckAliveResult<OAuthToken> {
         Ok(OAuthToken {
-            refresh_token: todo!(),
-            access_token: todo!(),
+            refresh_token: Some("refresh".to_string()),
+            access_token: "access".to_string(),
         })
     }
 }
