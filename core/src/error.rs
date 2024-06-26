@@ -1,7 +1,7 @@
 use thiserror::Error;
 
 #[derive(Error, Clone, Debug, PartialEq, Eq, PartialOrd, Ord)]
-pub enum CheckAliveError {
+pub enum AuthError {
     #[error("Tokio tasks connected unsuccessfully.")]
     JoinTokioTaskFailed,
 

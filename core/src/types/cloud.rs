@@ -3,6 +3,6 @@
 pub enum Cloud {
     /// Represents Google Drive.
     GoogleDrive,
-    /// Represents Yandex Disk.
-    YandexDisk,
+    // /// Represents Yandex Disk.
+    // YandexDisk,
 }

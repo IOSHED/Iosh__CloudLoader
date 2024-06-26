@@ -1,3 +1,3 @@
-use crate::error::CheckAliveError;
+use crate::error::AuthError;
 
-pub type CheckAliveResult<T> = Result<T, CheckAliveError>;
+pub type AuthResult<T> = Result<T, AuthError>;
