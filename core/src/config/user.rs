@@ -1,4 +1,3 @@
-
 #[derive(Debug, Clone)]
 pub struct OAuthSecret {
     pub client_id: String,

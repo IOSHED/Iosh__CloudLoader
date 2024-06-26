@@ -2,7 +2,10 @@ use futures::future;
 
 use super::AuthCloud;
 use crate::{
-    config::OAuthSecret, types::{Cloud, OAuthToken}, prelude::AuthResult, AuthError
+    config::OAuthSecret,
+    prelude::AuthResult,
+    types::{Cloud, OAuthToken},
+    AuthError,
 };
 
 #[derive(Debug, Clone)]
@@ -12,9 +15,7 @@ pub struct CheckerAlive {
 
 impl CheckerAlive {
     pub fn new(config: OAuthSecret) -> Self {
-        Self {
-            config
-        }
+        Self { config }
     }
 
     /// Checks the availability of multiple cloud storage services using their OAuth tokens.
@@ -54,10 +55,12 @@ impl CheckerAlive {
         let tasks: Vec<_> = clouds_with_auth
             .iter()
             .cloned()
-            .map(|cloud| tokio::task::spawn({
-            let value = self.clone();
-            async move { value.is_cloud_alive(checker, cloud).await }
-            }))
+            .map(|cloud| {
+                tokio::task::spawn({
+                    let value = self.clone();
+                    async move { value.is_cloud_alive(checker, cloud).await }
+                })
+            })
             .collect();
 
         let results = future::join_all(tasks).await;

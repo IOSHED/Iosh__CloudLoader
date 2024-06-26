@@ -1,4 +1,3 @@
-
 #[derive(Debug, Clone)]
 pub struct OAuthToken {
     pub refresh_token: Option<String>,

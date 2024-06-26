@@ -1,7 +1,12 @@
+use std::sync::Arc;
+
 use async_trait::async_trait;
 
 use crate::{
-    api_manager::{google_drive::VerifyGoogleDrive, interface::VerifyCloud}, config::OAuthSecret, types::{Cloud, OAuthToken}, prelude::AuthResult
+    api_manager::{google_drive::OAuthClient, interface::VerifyCloud},
+    config::OAuthSecret,
+    prelude::AuthResult,
+    types::{Cloud, OAuthToken},
 };
 
 #[async_trait]
@@ -18,8 +23,10 @@ unsafe impl Send for NetAuthCloud {}
 impl AuthCloud for NetAuthCloud {
     async fn check(&self, cloud: Cloud, config: &OAuthSecret) -> AuthResult<OAuthToken> {
         match cloud {
-            Cloud::GoogleDrive => VerifyGoogleDrive::new(config.clone())?.verify().await,
-            // Cloud::YandexDisk => VerifyYandexDrive::new(config.clone())?.verify().await,
+            Cloud::GoogleDrive => {
+                let client = Arc::new(OAuthClient::new(config.clone())?);
+                client.clone().verify().await
+            } // Cloud::YandexDisk => VerifyYandexDrive::new(config.clone())?.verify().await,
         }
     }
 }

@@ -17,6 +17,12 @@ pub enum AuthError {
     #[error("Could not access the Tocken Result of User.")]
     FailedGetTockenResult,
 
+    #[error("Server startup error. Try changing the port.")]
+    FailedBindServer,
+
+    #[error("Failed to receive token.")]
+    FailedReceiveToken,
+
     #[error("An unknown error has occurred: {0}.")]
     Unknow(String),
 }
