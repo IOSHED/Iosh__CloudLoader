@@ -1,5 +1,5 @@
-mod checker;
+mod auth;
 mod functions;
 
-pub use checker::{AuthCloud, NetAuthCloud};
-pub use functions::CheckerAlive;
+pub use auth::{AuthCloud, NetAuthCloud};
+pub use functions::AuthUserCloud;

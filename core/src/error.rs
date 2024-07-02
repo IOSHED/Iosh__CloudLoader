@@ -23,6 +23,9 @@ pub enum AuthError {
     #[error("Failed to receive token.")]
     FailedReceiveToken,
 
+    #[error("Can't open browser to click on link.")]
+    FailedOpenBrowser,
+
     #[error("An unknown error has occurred: {0}.")]
     Unknow(String),
 }
