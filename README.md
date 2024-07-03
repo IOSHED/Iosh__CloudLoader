@@ -45,8 +45,8 @@ We welcome contributions from the community! If you would like to contribute to 
 
 ### For starting in develop this project
 
-1) Run `scripts/setup_develop.bat`.
-2) Replace to `ENTER SECRETS` from your secrets data in file `secret\oauth\client_secret.json`.
+1) Run [`scripts/setup_develop.bat`](scripts/setup_develop.bat).
+2) Replace to `ENTER SECRETS` from your secrets data in file [`secret\oauth\client_secret.json`](/secret/oauth/client_secret.json).
 
 ## License
 
