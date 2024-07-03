@@ -30,7 +30,6 @@ impl OAuthClient {
             .get("code")
             .ok_or(AuthError::FailedGetTockenResult)?
             .to_string();
-
         let token_result = self
             .client
             .exchange_code(AuthorizationCode::new(auth_code.trim().to_string()))
@@ -50,8 +49,7 @@ impl OAuthClient {
     ) -> impl Responder {
         match oauth_client.handle_callback(query.into_inner()).await {
             Ok(token) => {
-                let mut sender_guard = oauth_client.token_sender.lock().unwrap();
-                if let Some(sender) = sender_guard.take() {
+                if let Some(sender) = oauth_client.token_sender.lock().unwrap().take() {
                     let _ = sender.send(token);
                 }
                 HttpResponse::Ok().body("Authorization successful! You can close this window now.")
@@ -60,17 +58,16 @@ impl OAuthClient {
         }
     }
 
-    pub async fn run<A>(self: Arc<Self>, addrs: A, path: String) -> AuthResult<()>
+    pub async fn run<A>(self: Arc<Self>, addr: A, path: String) -> AuthResult<()>
     where
         A: std::net::ToSocketAddrs,
     {
-        let oauth_client = web::Data::new(self.clone());
         let http_server = HttpServer::new(move || {
             App::new()
-                .app_data(oauth_client.clone())
-                .route(&path, web::get().to(OAuthClient::callback))
+                .app_data(web::Data::new(self.clone()))
+                .route(&path, web::get().to(Self::callback))
         })
-        .bind(addrs)
+        .bind(addr)
         .map_err(|_| AuthError::FailedBindServer)?;
 
         http_server
