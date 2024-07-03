@@ -1,8 +1,10 @@
-
 use async_trait::async_trait;
 
 use crate::{
-    api_manager::{google_drive::auth::auth::GoogleDriveAuth, interface::Authorizer}, config::OAuthSecret, prelude::AuthResult, types::{Cloud, OAuthToken}, AuthError
+    api_manager::{google_drive::auth::auth::GoogleDriveAuth, interface::Authorizer},
+    config::OAuthSecret,
+    prelude::AuthResult,
+    types::{Cloud, OAuthToken},
 };
 
 #[async_trait]

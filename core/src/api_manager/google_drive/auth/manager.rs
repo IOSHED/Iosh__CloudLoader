@@ -1,12 +1,10 @@
-
 use std::sync::Arc;
+
 use oauth2::basic::BasicClient;
-use oauth2::{
-    AuthUrl, ClientId, ClientSecret, CsrfToken, RedirectUrl, Scope, TokenUrl,
-};
+use oauth2::{AuthUrl, ClientId, ClientSecret, CsrfToken, RedirectUrl, Scope, TokenUrl};
+
 use crate::config::OAuthSecret;
 use crate::{AuthError, AuthResult};
-
 
 pub struct OAuthManager {
     client: Arc<BasicClient>,
@@ -37,7 +35,7 @@ impl OAuthManager {
     pub async fn generate_and_browse_auth_url(&self) -> AuthResult<()> {
         let (auth_url, _csrf_token) = self.authorize_url();
         if let Err(_) = webbrowser::open(&auth_url) {
-            return Err(AuthError::FailedOpenBrowser)
+            return Err(AuthError::FailedOpenBrowser);
         }
         Ok(())
     }
@@ -58,4 +56,3 @@ impl OAuthManager {
         (auth_url.to_string(), csrf_token)
     }
 }
-

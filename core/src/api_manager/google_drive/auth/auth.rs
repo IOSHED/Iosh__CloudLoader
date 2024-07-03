@@ -1,12 +1,14 @@
-use std::{net::{IpAddr, Ipv4Addr, SocketAddr}, sync::Arc};
+use std::{
+    net::{IpAddr, Ipv4Addr, SocketAddr},
+    sync::Arc,
+};
 
 use async_trait::async_trait;
 
-use crate::{api_manager::interface::Authorizer, config::OAuthSecret, AuthError, AuthResult, OAuthToken};
-
 use super::{client::OAuthClient, manager::OAuthManager};
-
-
+use crate::{
+    api_manager::interface::Authorizer, config::OAuthSecret, AuthError, AuthResult, OAuthToken,
+};
 
 pub struct GoogleDriveAuth;
 
@@ -26,7 +28,7 @@ impl Authorizer for GoogleDriveAuth {
         oauth_veryfer.generate_and_browse_auth_url().await?;
 
         if let Ok(res) = receiver.await {
-            return Ok(res)
+            return Ok(res);
         }
 
         Err(AuthError::JoinTokioTaskFailed)

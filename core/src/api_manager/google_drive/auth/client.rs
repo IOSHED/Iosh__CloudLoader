@@ -4,10 +4,7 @@ use std::sync::{Arc, Mutex};
 use actix_web::{web, App, HttpResponse, HttpServer, Responder};
 use oauth2::basic::BasicClient;
 use oauth2::reqwest::async_http_client;
-use oauth2::{
-    AuthorizationCode,
-    TokenResponse, 
-};
+use oauth2::{AuthorizationCode, TokenResponse};
 use tokio::sync::oneshot;
 
 use crate::{AuthError, AuthResult, OAuthToken};
@@ -18,13 +15,16 @@ pub struct OAuthClient {
 }
 
 impl OAuthClient {
-    pub fn new(client: Arc<BasicClient>, token_sender: oneshot::Sender<OAuthToken>) -> AuthResult<Self> {
+    pub fn new(
+        client: Arc<BasicClient>,
+        token_sender: oneshot::Sender<OAuthToken>,
+    ) -> AuthResult<Self> {
         Ok(Self {
             client,
             token_sender: Arc::new(Mutex::new(Some(token_sender))),
         })
     }
-    
+
     async fn handle_callback(&self, query: HashMap<String, String>) -> AuthResult<OAuthToken> {
         let auth_code = query
             .get("code")
@@ -56,12 +56,12 @@ impl OAuthClient {
                 }
                 HttpResponse::Ok().body("Authorization successful! You can close this window now.")
             }
-            Err(_) => HttpResponse::InternalServerError().body("Authorization failed.")
+            Err(_) => HttpResponse::InternalServerError().body("Authorization failed."),
         }
     }
 
-    pub async fn run<A>(self: Arc<Self>, addrs: A, path: String) -> AuthResult<()> 
-    where 
+    pub async fn run<A>(self: Arc<Self>, addrs: A, path: String) -> AuthResult<()>
+    where
         A: std::net::ToSocketAddrs,
     {
         let oauth_client = web::Data::new(self.clone());
@@ -73,7 +73,10 @@ impl OAuthClient {
         .bind(addrs)
         .map_err(|_| AuthError::FailedBindServer)?;
 
-        http_server.run().await.map_err(|_| AuthError::FailedBindServer)?;
+        http_server
+            .run()
+            .await
+            .map_err(|_| AuthError::FailedBindServer)?;
 
         Ok(())
     }
