@@ -43,6 +43,11 @@ This desktop application allows you to use cloud storage services (such as Googl
 
 We welcome contributions from the community! If you would like to contribute to CloudLoader, please fork the repository and submit a pull request. For major changes, please open an issue first to discuss what you would like to change.
 
+### For starting in develop this project
+
+1) Run `scripts/setup_develop.bat`.
+2) Replace to `ENTER SECRETS` from your secrets data in file `secret\oauth\client_secret.json`.
+
 ## License
 
 CloudLoader is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
