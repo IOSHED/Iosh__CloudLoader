@@ -1,3 +1,3 @@
-mod user;
+mod auth_secret;
 
-pub use user::OAuthSecret;
+pub use auth_secret::OAuthSecret;
