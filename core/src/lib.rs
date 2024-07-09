@@ -6,6 +6,9 @@ mod error;
 mod prelude;
 mod types;
 
+// TODO: ...
+pub mod api;
+
 pub mod config;
 
 pub use auth::{AuthUserCloud, NetAuthCloud};

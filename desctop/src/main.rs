@@ -1,6 +1,6 @@
 #![allow(clippy::all)]
 
-use core_cloud_loader::{config::OAuthSecret, AuthUserCloud, Cloud, NetAuthCloud};
+use core_cloud_loader::{api, config::OAuthSecret, AuthUserCloud, Cloud, NetAuthCloud};
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -14,8 +14,25 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let auther = AuthUserCloud::new(oauth_config);
     let res = auther.is_cloud(NetAuthCloud, Cloud::GoogleDrive).await;
+    let token = res.unwrap().access_token;
 
-    println!("{:#?}", res);
+    println!("{:#?}", token.clone());
+
+    let err = api::list_files(&token).await;
+
+    println!("{:#?}", err);
+
+    let err = api::upload_file(&token, "file.txt", "text/plain", None).await;
+
+    println!("{:#?}", err);
+
+    let err = api::list_files(&token).await;
+
+    println!("{:#?}", err);
+
+    let err = api::download_file(&token, "1nizWPaZHOuQaud4xgu66SJB0ERdKnlXp", "f.txt").await;
+
+    println!("{:#?}", err);
 
     Ok(())
 }
