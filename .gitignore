@@ -23,3 +23,8 @@ Cargo.lock
 /frontend-svelte/.svelte-kit
 /frontend-svelte/node_modules
 /frontend-svelte/package-lock.json
+
+##############################
+########### Tauri ############
+##############################
+/backend-tauri/gen
