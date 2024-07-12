@@ -8,8 +8,18 @@ Cargo.lock
 ########## Secrets ###########
 ##############################
 /secret
+.env
+.env.*
+!.env.example
 
 ##############################
 ####### DevOps Python ########
 ##############################
 /venv
+
+##############################
+########## Svelte ############
+##############################
+/frontend-svelte/.svelte-kit
+/frontend-svelte/node_modules
+/frontend-svelte/package-lock.json

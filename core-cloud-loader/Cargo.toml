@@ -1,5 +1,5 @@
 [package]
-name = "core_cloud_loader"
+name = "core-cloud-loader"
 version = "0.1.0"
 edition = "2021"
 authors = [
@@ -8,9 +8,7 @@ authors = [
 description = "This library is designed for connecting to various cloud services and for uploading/downloading data from them."
 repository = "https://github.com/IOSHED/Iosh__CloudLoader"
 
-
 [lib]
-# generate lib for tests and reusing the code
 path = "src/lib.rs"
 
 [dependencies]

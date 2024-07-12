@@ -2,7 +2,6 @@
 [workspace]
 resolver = "2"
 members = [
-    "core",
-    "desctop",
-    "web/backend",
+    "core-cloud-loader",
+    "backend-tauri",
 ]
