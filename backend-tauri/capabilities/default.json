@@ -12,6 +12,7 @@
     "resources:default",
     "menu:default",
     "tray:default",
-    "shell:allow-open"
+    "fs:deny-read-text-file",
+    "fs:deny-write-file"
   ]
 }
