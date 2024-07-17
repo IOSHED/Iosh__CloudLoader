@@ -1,10 +1,11 @@
 <script>
     export let icon;
     export let label;
+    export let func;
   </script>
 
   <div class="d-flex flex-column align-items-center">
-      <button class="btn-square">
+      <button class="btn-square" on:click={func}>
          <i class={`bi ${icon}`}></i>
       </button>
       <div class="btn-label">{label}</div>

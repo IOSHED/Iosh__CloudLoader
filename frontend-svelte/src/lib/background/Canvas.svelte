@@ -2,7 +2,7 @@
     import { onMount } from 'svelte';
 
     // Константы для настроек
-    const ATTRACTION_FORCE = 0.01; // Сила притяжения к углам
+    const ATTRACTION_FORCE = 0.04; // Сила притяжения к углам
     const MUTUAL_ATTRACTION_FORCE = 0.005; // Сила притяжения друг к другу
     const REPULSION_FORCE = 0.05; // Сила отталкивания от центров
     const MAX_ATTRACTION_DISTANCE = 100; // Максимальная дистанция для притяжения
@@ -10,7 +10,6 @@
 
     export let colorsBalls;
     export let quantityBalls = 10;
-    export let speedBalls = 70;
 
     let canvas;
     let ctx;
