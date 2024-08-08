@@ -1,36 +1,24 @@
-<script>
-    import Canvas from "$lib/background/Canvas.svelte";
 
-    const colorsBalls = ["#56afba95", "#6fb3e675", "#8bbea15a", "#bd464f77"];
-</script>
-
-<div class="m-0 p-0 bg-dark vh-100 d-flex w-auto">
-    <Canvas { colorsBalls } quantityBalls=20 speedBalls=80 />
-
-    <div class="overlay">
-        <slot></slot>
-    </div>
-
+<div class="overlay vh-100 vw-100">
+    <slot></slot>
 </div>
 
 <style>
-    div {
-        position: relative;
-        overflow: hidden;
+    .overlay {
+        background: linear-gradient(80deg, #2AA5A0, #ffffff, #E3535D);
+        animation: gradient 10s infinite linear;
+        background-size: 300%;
     }
 
-    .overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        color: white;
-        text-align: center;
+    @keyframes gradient {
+        0% {
+            background-position: 80% 0%;
+        }
+        50% {
+            background-position: 20% 100%;
+        }
+        100% {
+            background-position: 80% 0%;
+        }
     }
 </style>
-

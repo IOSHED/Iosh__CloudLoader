@@ -1,0 +1,1 @@
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center border-bottom border-dark border-2 mb-1"></div>

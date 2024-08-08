@@ -19,7 +19,9 @@ impl UniqueName {
 
     async fn generate_unique_name(collection: &[String]) -> String {
         if let Some(last_name) = collection.last() {
-            return format!("{} ({})", last_name, collection.len() + 1);
+            let mut split_last_name: Vec<&str> = last_name.split("(").collect();
+            split_last_name.pop();
+            return format!("{} ({})", split_last_name.concat(), collection.len() + 1);
         }
         "New Name (1)".to_string()
     }

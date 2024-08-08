@@ -11,8 +11,9 @@ use crate::{
 pub async fn create_new_repository_cloud(
     controller: State<'_, RepositoryCloudController>,
     name_repository: Option<String>,
-    clouds: Vec<(Option<String>, Cloud)>,
+    clouds: Vec<(Option<String>, String)>,
 ) -> ControllerResult<Vec<RepositoryCloud>> {
+    let clouds: Vec<(Option<String>, Cloud)> = clouds.into_iter().map(|(name, cloud)| (name, cloud.into())).collect();
     controller
         .create_repository_cloud(name_repository, clouds)
         .await?;
@@ -49,10 +50,10 @@ pub async fn add_cloud_to_repository(
     controller: State<'_, RepositoryCloudController>,
     name_repository: String,
     name_inuse_cloud: Option<String>,
-    cloud: Cloud,
+    cloud: String,
 ) -> ControllerResult<Vec<RepositoryCloud>> {
     controller
-        .add_new_cloud(name_repository, name_inuse_cloud, cloud)
+        .add_new_cloud(name_repository, name_inuse_cloud, cloud.into())
         .await?;
     controller.list_repository_cloud().await
 }
@@ -102,6 +103,6 @@ pub async fn list_all_inuse_cloud(
 }
 
 #[tauri::command]
-pub fn get_reading_docs() -> &'static str {
-    "Здесь должна была быть документция"
+pub fn get_reading_docs() -> String {
+    "Здесь должна была быть документция.".into()
 }

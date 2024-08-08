@@ -8,3 +8,9 @@ pub enum Cloud {
     // /// Represents Yandex Disk.
     // YandexDisk,
 }
+
+impl From<String> for Cloud {
+    fn from(_: String) -> Self {
+        Cloud::GoogleDrive
+    }
+}

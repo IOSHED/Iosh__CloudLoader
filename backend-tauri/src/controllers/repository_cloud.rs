@@ -30,9 +30,6 @@ impl RepositoryCloudController {
         name_repository: Option<String>,
         clouds: Vec<(Option<String>, Cloud)>,
     ) -> ControllerResult<()> {
-        let mut repositories = self.repositories.lock().await;
-        let inuse_cloud_controller = self.inuse_cloud_controller.lock().await;
-
         let inuse_clouds = join_all(clouds.into_iter().map(|(name, cloud)| async {
             InuseCloud::new(self.generate_name_cloud(name).await, cloud)
         }))
@@ -44,8 +41,11 @@ impl RepositoryCloudController {
             self.generate_name_repository(name_repository).await,
             arc_inuse_clouds.clone(),
         );
+        
+        let mut repositories = self.repositories.lock().await;
         repositories.push(new_repository_cloud);
 
+        let inuse_cloud_controller = self.inuse_cloud_controller.lock().await;
         inuse_cloud_controller
             .add_inuse_cloud(arc_inuse_clouds.clone())
             .await;
